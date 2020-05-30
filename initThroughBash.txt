@@ -1,0 +1,44 @@
+rs.initiate(
+  {
+    _id: "rs0",
+    configsvr: true,
+    members: [
+      { _id : 0, host : "192.168.0.234:27000" },
+      { _id : 1, host : "192.168.0.234:27001" },
+      { _id : 2, host : "192.168.0.234:27002" }
+    ]
+  }
+)
+
+
+
+# confid do shardow ponizej, a powyzej do serverow
+
+rs.initiate(
+  {
+    _id: "rs0shards",
+    members: [
+      { _id : 0, host : "192.168.0.234:28000" },
+      { _id : 1, host : "192.168.0.234:28001" },
+      { _id : 2, host : "192.168.0.234:28002" }
+    ]
+  }
+)
+
+#config do 2 sharda
+rs.initiate(
+  {
+    _id: "rs1shards",
+    members: [
+      { _id : 0, host : "192.168.0.234:28003" },
+      { _id : 1, host : "192.168.0.234:28004" },
+      { _id : 2, host : "192.168.0.234:28005" }
+    ]
+  }
+)
+
+
+#dodawanie sharda
+
+sh.addShard("rs0shards/192.168.0.234:28000,192.168.0.234:28001,192.168.0.234:28002")
+sh.addShard("rs1shards/192.168.0.234:28003,192.168.0.234:28004,192.168.0.234:28005")
